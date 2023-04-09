@@ -1,0 +1,145 @@
+header {
+	background-color: #333;
+	color: #e6d7d7;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 30px;
+
+}
+main {
+    text-align: center;
+    height: 1em;
+}
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+nav li {
+	display: inline-block;
+	margin-right: 20px;
+}
+
+nav a, .login a {
+	color: #fff;
+	text-decoration: none;
+}
+
+.logo img, .social img {
+	height: 150px;
+	margin-right: 160px;
+}
+
+.social {
+	display: flex;
+	align-items: center;
+
+}
+
+.login {
+	margin-right: auto;
+}
+
+
+
+/* CSS commun à toutes les pages */
+header {
+	background-color: #000;
+	color: #fff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px;
+}
+
+.logo img {
+	height: 50px;
+	margin-right: 10px;
+}
+
+nav ul {
+	display: flex;
+}
+
+nav ul li {
+	margin-left: 20px;
+	list-style: none;
+}
+
+nav ul li a {
+	color: #fff;
+	text-decoration: none;
+}
+
+main {
+	margin: 20px auto;
+	max-width: 800px;
+	padding: 20px;
+}
+
+footer {
+	
+	color: #e01414;
+	padding: 100px;
+	text-align: right;
+}
+
+/* CSS spécifique à la page Nous Joindre */
+
+h2 {  color: #f0dddf;
+    background-color: #000;
+    
+
+}
+#contact {
+	margin-top: 50px;
+}
+
+#contact h2 {
+	margin-bottom: 30px;
+    color: #090dda;
+    background-color: #000;
+    
+}
+
+#contact form {
+	display: flex;
+	flex-direction: column;
+	max-width: 500px;
+	margin: 0 auto;
+    color: #090dda;
+    
+    
+}
+
+#contact label {
+	margin-bottom: 10px;
+    color: #090dda;
+   
+}
+
+#contact input, #contact textarea {
+	margin-bottom: 20px;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 2px 2px 5px #ccc;
+   
+}
+
+#contact button {
+	padding: 10px;
+	background-color: #000;
+	color: #090dda;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+#contact button:hover {
+	background-color: #555;
+}

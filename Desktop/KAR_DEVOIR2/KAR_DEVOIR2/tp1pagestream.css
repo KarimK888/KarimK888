@@ -1,0 +1,92 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+    background-image: url('netflix-background-9-900x506.png');
+	background-size: cover;
+	background-position: center;
+}
+header {
+	background-color: #333;
+	color: #e6d7d7;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 20px;
+
+}
+
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+nav li {
+	display: inline-block;
+	margin-right: 20px;
+}
+
+nav a, .login a {
+	color: #fff;
+	text-decoration: none;
+}
+
+.logo img, .social img {
+	height: 150px;
+	margin-right: 160px;
+}
+
+.social {
+	display: flex;
+	align-items: center;
+
+}
+
+.login {
+	margin-right: auto;
+}
+
+/* Styles pour les sections de films */
+section {
+	padding: 15px 50px;
+}
+
+h2 {
+	font-size: 30px;
+	font-weight: bold;
+	margin-bottom: 5px;
+    color: #fa0707;
+    background-color: #000;
+}
+
+.movie-container {
+	display: flex;
+	flex-wrap: wrap;
+    justify-content: space-between;
+	
+}
+
+.movie {
+	width: calc(33% - 20px);
+	margin-bottom: 20px;
+}
+
+.movie video {
+	width: 100%;
+	height: auto;
+	margin-bottom: 5px;
+}
+
+.movie h3 {
+	font-size: 25px;
+	margin-bottom: 10px;
+    color: #fa0707;
+}
+
+.movie p {
+	font-size: 15px;
+	color: #dad4d6;
+	margin-bottom: 0;
+}
