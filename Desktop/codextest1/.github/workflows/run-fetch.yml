@@ -1,0 +1,61 @@
+name: Run fetch (example)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *' # daily at 06:00 UTC (example)
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run fetch (with secrets)
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          # Use either APP password or OAuth2 refresh token
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+          RESULTS_PATH: results.json
+          LOG_PATH: fetch_gmail_imap.log
+          MARK_SEEN: 'false'
+        run: |
+          node fetch_gmail_imap.js --results results.json --log fetch_gmail_imap.log --mark-seen false --log-level info
+      - name: Upload results and status
+        uses: actions/upload-artifact@v4
+        with:
+          name: fetch-results
+          path: |
+            results.json
+            fetch_gmail_imap.log
+            status.json
+
+      - name: POST status to endpoint (optional)
+        if: ${{ secrets.STATUS_ENDPOINT != '' }}
+        env:
+          STATUS_ENDPOINT: ${{ secrets.STATUS_ENDPOINT }}
+          STATUS_AUTH: ${{ secrets.STATUS_AUTH }}
+        run: |
+          echo "Posting status.json to $STATUS_ENDPOINT"
+          if [ -n "$STATUS_AUTH" ]; then
+            # If STATUS_AUTH looks like 'HMAC:key' or 'Bearer token' you can adapt accordingly
+            if echo "$STATUS_AUTH" | grep -q ':'; then
+              # HMAC secret provided; compute HMAC of body and send header
+              BODY_FILE=status.json
+              SIG=$(cat $BODY_FILE | openssl dgst -sha256 -hmac "$STATUS_AUTH" -binary | xxd -p -c 256)
+              curl -sS -X POST $STATUS_ENDPOINT -H 'Content-Type: application/json' -H "X-Signature: $SIG" --data-binary @status.json || true
+            else
+              # Treat as Bearer token
+              curl -sS -X POST $STATUS_ENDPOINT -H 'Content-Type: application/json' -H "Authorization: Bearer $STATUS_AUTH" --data-binary @status.json || true
+            fi
+          else
+            curl -sS -X POST $STATUS_ENDPOINT -H 'Content-Type: application/json' --data-binary @status.json || true
+          fi
