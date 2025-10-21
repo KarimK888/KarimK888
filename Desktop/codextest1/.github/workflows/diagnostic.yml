@@ -1,0 +1,13 @@
+name: Diagnostic workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Echo diagnostic
+        run: echo "diagnostic: GitHub Actions indexing OK"
